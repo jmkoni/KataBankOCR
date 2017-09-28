@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: PipeNumber
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "PipeNumber";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (P)</a> &raquo;
+    
+    
+    <span class="title">PipeNumber</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="class_list.html"></iframe>
+
+      <div id="content"><h1>Class: PipeNumber
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">PipeNumber</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>read_numbers.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>This class takes a file that contains a list of numbers written with pipes
+and underscores (think a calculator display) and returns a list of real
+numbers. Each entry is 4 lines long, and each line has 27 characters. The
+first 3 lines of each entry contain an account number written using pipes
+and underscores, and the fourth line is blank. Each account number should
+have 9 digits, all of which should be in the range 0-9.</p>
+
+<p>From: [KataBankOCR](<a
+href="http://codingdojo.org/kata/BankOCR">codingdojo.org/kata/BankOCR</a>/)</p>
+
+<p>Initialization:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_reader'>reader</span> <span class='op'>=</span> <span class='const'>PipeNumber</span><span class='op'>::</span><span class='const'>Reader</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_filepath'>filepath</span><span class='rparen'>)</span>
+</code></pre>
+
+<p>Definition of parameters:</p>
+
+<pre class="code ruby"><code class="ruby">filepath:          path to file containing text numbers</code></pre>
+
+<p>Note:</p>
+
+<pre class="code ruby"><code class="ruby"> File should look like this:
+ _  _  _  _  _  _  _  _  _ 
+ _|| || || || || || || || |
+|_ |_||_||_||_||_||_||_||_|
+
+ _  _  _  _  _  _  _  _  _ 
+ _| _| _| _| _| _| _| _| _|
+ _| _| _| _| _| _| _| _| _|
+
+ _     _  _  _  _  _  _  _ 
+ _||_||_ |_||_| _||_||_ |_ 
+ _|  | _||_||_||_ |_||_| _|</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Jennifer Konikowski &lt;jmkoni@icloud.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="PipeNumber/Reader.html" title="PipeNumber::Reader (class)">Reader</a></span>, <span class='object_link'><a href="PipeNumber/Translator.html" title="PipeNumber::Translator (class)">Translator</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Sep 28 09:20:59 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.2.1).
+</div>
+
+    </div>
+  </body>
+</html>
