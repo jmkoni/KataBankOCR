@@ -18,6 +18,8 @@ PipeNumber::Reader.new(filepath)
 * filepath: path to file containing text numbers
 
 #### Example:
+
+Of running the class:
 ```ruby
 # numbers.txt looks like this:
 #     _  _     _  _  _  _  _ 
@@ -36,6 +38,12 @@ reader = PipeNumber::Reader.new("~/Desktop/numbers.txt")
 reader.numbers.each do |num|
   puts num
 end
+```
+
+Of running the script:
+```ruby
+ruby read_numbers.rb
+# it will then prompt you for a file path. Please type it in, then press enter.
 ```
 
 #### Output:

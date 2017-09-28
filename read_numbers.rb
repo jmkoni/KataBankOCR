@@ -53,6 +53,7 @@ class PipeNumber
     private
     # NOT THE BEST WAY I AM PRETTY SURE
     # so many if statements :(
+    # I do think this isn't a bad way to start user story 4 though...
     def determine_number(row1, row2, row3)
       if row1 == " _ "
         num = row_one_underscore(row2, row3)
@@ -165,6 +166,7 @@ class PipeNumber
     private
     # should look like this:
     #   [ [[row1, row2, row3] x 9] x count ]
+    # read in the file and organize it into individual "numbers"
     def number_reader
       numbers = Array.new(@count) { Array.new(9) { Array.new(3) { "   " }} }
       index = 0
@@ -182,12 +184,13 @@ class PipeNumber
       number_chars.each_with_index do |characters, i|
         next if characters.length == 0
         characters.each_with_index do |character, j|
-          numbers[i / 3][j][i%3] = character
+          numbers[i / 3][j][i % 3] = character
         end
       end
       translate_numbers(numbers)
     end
-
+    
+    # take each set of string numbers and translate them into an actual number
     def translate_numbers(numbers)
       translated_numbers = []
       numbers.each do | all_numbers |
@@ -218,7 +221,7 @@ class PipeNumber
   end
 end
 
-puts "Please enter the filename:"
+puts "Please enter the file path:"
 filename = gets.chomp
 reader = PipeNumber::Reader.new(filename)
 reader.numbers.each do |num|

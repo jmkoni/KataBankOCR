@@ -86,24 +86,37 @@ href="https://github.com/jmkoni/KataBankOCR">github.com/jmkoni/KataBankOCR</a></
 
 <h4 id="label-Example-3A">Example:</h4>
 
-<pre class="code ruby"><code class="ruby"><span class='comment'># numbers.txt looks like this:
-</span><span class='comment'>#     _  _     _  _  _  _  _ 
-</span><span class='comment'>#   | _| _||_||_ |_   ||_||_|
-</span><span class='comment'>#   ||_  _|  | _||_|  ||_| _|
-</span><span class='comment'># 
-</span><span class='comment'>#  _  _  _  _  _  _  _  _    
-</span><span class='comment'># | || || || || || || ||_   |
-</span><span class='comment'># |_||_||_||_||_||_||_| _|  |
-</span><span class='comment'># 
-</span><span class='comment'>#     _  _  _  _  _  _     _ 
-</span><span class='comment'># |_||_|| || ||_   |  |  | _ 
-</span><span class='comment'>#   | _||_||_||_|  |  |  | _|
-</span>  
-<span class='id identifier rubyid_reader'>reader</span> <span class='op'>=</span> <span class='const'>PipeNumber</span><span class='op'>::</span><span class='const'>Reader</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~/Desktop/numbers.txt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='id identifier rubyid_reader'>reader</span><span class='period'>.</span><span class='id identifier rubyid_numbers'>numbers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_num'>num</span><span class='op'>|</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_num'>num</span>
-<span class='kw'>end</span>
-</code></pre>
+<p>Of running the class: “`ruby</p>
+
+<h1 id="label-numbers.txt+looks+like+this-3A">numbers.txt looks like this:</h1>
+
+<h1 id="label-_+_+_+_+_+_+_">_ _ _ _ _ _ _</h1>
+
+<h1 id="label-7C+-7C+-7C-7C-7C-7C+-7C_+-7C-7C-7C-7C-7C">| <em>| ||||</em> |_ ||<em>||</em>|</h1>
+
+<h1 id="label-7C-7C_+-7C+-7C+-7C-7C-7C+-7C-7C-7C+_-7C">||_ <em>| | ||| ||</em>| _|</h1>
+
+<p>#</p>
+
+<h1 id="label-_+_+_+_+_+_+_+_">_ _ _ _ _ _ _ _</h1>
+
+<h1 id="label-7C+-7C-7C+-7C-7C+-7C-7C+-7C-7C+-7C-7C+-7C-7C+-7C-7C_+-7C">| || || || || || || ||_ |</h1>
+
+<h1 id="label-7C-7C-7C-7C-7C-7C-7C-7C-7C-7C-7C-7C-7C_-7C+_-7C+-7C">|<em>||</em>||<em>||</em>||<em>||</em>||_| _| |</h1>
+
+<p>#</p>
+
+<h1 id="label-_+_+_+_+_+_+_">_ _ _ _ _ _ _</h1>
+
+<h1 id="label-7C-7C-7C-7C-7C+-7C-7C+-7C-7C_+-7C+-7C+-7C+_">|<em>||</em>|| || ||_ | | | _</h1>
+
+<h1 id="label-7C+-7C-7C-7C-7C-7C-7C-7C+-7C+-7C+-7C+_-7C">| <em>||</em>||<em>||</em>| | | | _|</h1>
+
+<p>reader = PipeNumber::Reader.new(“~/Desktop/numbers.txt”)
+reader.numbers.each do |num|  puts num end “`</p>
+
+<p>Of running the script: <code>ruby ruby read_numbers.rb # it will then
+prompt you for a file path. Please type it in, then press enter. </code></p>
 
 <h4 id="label-Output-3A">Output:</h4>
 
@@ -113,7 +126,7 @@ href="https://github.com/jmkoni/KataBankOCR">github.com/jmkoni/KataBankOCR</a></
 </div></div>
 
       <div id="footer">
-  Generated on Thu Sep 28 09:26:00 2017 by
+  Generated on Thu Sep 28 09:54:07 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.2.1).
 </div>
