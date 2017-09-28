@@ -2,7 +2,12 @@
 
 This is an attempt to solve the KataBankOCR problem, user stories 1 through 3.
 
+
 View original problem at: http://codingdojo.org/kata/BankOCR/
+
+View full docs at: https://jmkoni.github.io/KataBankOCR/
+
+View source code at: https://github.com/jmkoni/KataBankOCR
 
 #### Initialization:
 ```ruby
