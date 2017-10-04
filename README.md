@@ -35,9 +35,7 @@ Of running the class:
 #   | _||_||_||_|  |  |  | _|
   
 reader = PipeNumber::Reader.new("~/Desktop/numbers.txt")
-reader.numbers.each do |num|
-  puts num
-end
+reader.print_all_with_variations
 ```
 
 Of running the script:

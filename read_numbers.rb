@@ -1,3 +1,5 @@
+require 'text'
+
 # @author Jennifer Konikowski <jmkoni@icloud.com>
 # This class takes a file that contains a list of numbers written with pipes
 # and underscores (think a calculator display) and returns a list of real
@@ -143,6 +145,163 @@ class PipeNumber
     end
   end
   
+  # This class should get all manipulations of any given character set.
+  # Initialization:
+  #     variants = Variant.new(number_array)  
+  class Variant
+    # Gets the original array of characters
+    # @return [Array] original array of characters
+    attr_reader :original_array
+    
+    CHARACTERS = ["|", "_", " "]
+    VALID_PATTERNS = [" _ ", "   ", "|  ", "  |", "|_ ", " _|", "|_|"]
+    
+    # Initalizes new Variant object
+    # @param number_array [Array] array of length 3, strings, doesn't change after initialization
+    # @return [Variant] a new Variant object
+    # @example Create a new Variant (for number 3)
+    #     Variant.new([" _ ", " _|", " _|"])
+    def initialize(number_array)
+      @original_array = number_array
+    end
+    
+    # Returns all variations for a Variant object
+    # @return [Array] an array of string numbers
+    # @example Get all variations for a Variant
+    #     variant.number_variations
+    def number_variations
+      all_numbers = []
+      variations.each do | variant |
+        num = Translator.new(variant).num
+        all_numbers << num unless num == "?"
+      end
+      all_numbers
+    end
+    
+    private
+    def variations
+      all_variations = []
+      @original_array.each_with_index do |characters, i|
+        VALID_PATTERNS.each do |pattern|
+          if Text::Levenshtein.distance(characters, pattern) == 1
+            tmp_array = @original_array.dup
+            tmp_array[i] = pattern
+            all_variations << tmp_array
+          end
+        end
+      end
+      all_variations
+    end
+  end
+
+  # This class represents an account number, with variants.
+  # Initialization:
+  #     account_number = AccountNumber.new(number, variants)  
+  class AccountNumber
+    # Gets the number
+    # @return [String] 9 digit account number
+    attr_reader :value
+    # Gets the list of variants
+    # @return [Array] list of variants
+    attr_reader :variants
+    # Gets the error
+    # @return [String] either "ERR", "ILL", or nil
+    attr_reader :error
+    
+    # Initalizes new AccountNumber object
+    # @param number [Array] array of Translator objects
+    # @param variants [Array] array of Variant objects
+    # @return [AccountNumber] a new AccountNumber object
+    # @example Create a new AccountNumber
+    #     Reader.new([], [])
+    def initialize(number, variants)
+      @variants = []
+      @value = determine_number(number, variants)
+      @error = AccountNumber.validate(@value)  
+    end
+    
+    # Validates a given account number
+    # @param number [String] 9 digit account number
+    # @return [String] either "ERR", "ILL", or nil
+    # @example Validate an account number
+    #     AccountNumber.validate("123567")
+    def self.validate(number)
+      check_error(number)
+    end
+    
+    # Validates variants
+    # @example Validate the variants
+    #     account_number.validate_variants
+    def validate_variants
+      @variants.select! do | variant |
+        variant_error = AccountNumber.validate(variant)
+        variant_error.nil?
+      end
+      if error_exists? and @variants.any?
+        @value = @variants.shift
+        @error = AccountNumber.validate(@value)
+      end      
+    end
+    
+    private
+    def error_exists?
+      !@error.nil?
+    end
+    
+    def determine_number(number, variants)
+      main_number = ""
+      full_variants = []
+      number.each_with_index do |num, i|
+        old_number = main_number
+        main_number += num.num
+        full_variants = update_full_variants(full_variants, num.num, variants[i], old_number)  
+      end
+      @variants = full_variants.select { | variant | variant.length == 9 }
+      main_number
+    end
+    
+    def update_full_variants(full_variants, number, variant, old_number)
+      variant_nums = variant.number_variations
+      if number == "?"
+        variant_nums.each do | variant_num |
+          full_variants.map! do | full_variant |
+            full_variant += variant_num
+          end
+        end
+      else
+        full_variants.map! do | full_variant |
+          full_variant += number
+        end
+      end
+      
+      unless variant_nums.empty?
+        variant_nums.each do | variant_num |
+          full_variants << old_number + variant_num
+        end
+      end
+      full_variants
+    end
+    
+    def self.check_error(number)
+      if number.include?("?")
+        "ILL"
+      elsif !is_valid_checksum(number)
+        "ERR"
+      else
+        nil
+      end
+    end 
+    
+    def is_valid_checksum(number)
+      sum = 0
+      number_length = number.length
+      number.split("").each_with_index do | character, i |
+        sum += character.to_i * (number_length - i)
+      end
+      sum % 11 == 0
+    end 
+  end
+  
   # This class takes in a filepath, splits it into lines, and send to the
   # translator.
   # Initialization:
@@ -161,6 +320,36 @@ class PipeNumber
       @file = File.open(file_path, "r")
       @count = (%x{wc -l #{file_path}}.split.first.to_i / 4) + 1
       @numbers = number_reader
+    end
+    
+    # Prints all numbers
+    # @example Prints all numbers
+    #     reader.print_all
+    def print_all
+      numbers.each do | num |
+        if num.error
+          puts num.value + " " + num.error
+        else
+          puts num.value
+        end
+      end
+    end
+    
+    # Prints all numbers with variations
+    # @example Prints all numbers with the variations
+    #     reader.print_all_with_variations
+    def print_all_with_variations
+      numbers.each do | num |
+        # puts "num: " + numm.value
+        num.validate_variants
+        if num.error
+          puts num.value + " " + num.error
+        elsif num.variants.any?
+          puts num.value + " AMB " + num.variants.inspect
+        else
+          puts num.value
+        end
+      end
     end
 
     private
@@ -194,36 +383,22 @@ class PipeNumber
     def translate_numbers(numbers)
       translated_numbers = []
       numbers.each do | all_numbers |
-        number = ""
+        number = []
+        variants = []
         all_numbers.each do | indiv_number |
-          number += Translator.new(indiv_number).num
+          number << Translator.new(indiv_number)
+          variants << Variant.new(indiv_number)
         end
-        if number.include?("?")
-          number = number + " ILL"
-        else
-          unless is_valid_checksum(number)
-            number = number + " ERR"
-          end
-        end
-        translated_numbers << number
+        
+        translated_numbers << AccountNumber.new(number, variants)
       end
       translated_numbers
     end
     
-    def is_valid_checksum(number)
-      sum = 0
-      number_length = number.length
-      number.split("").each_with_index do | character, i |
-        sum += character.to_i * (number_length - i)
-      end
-      sum % 11 == 0
-    end
   end
 end
 
 puts "Please enter the file path:"
 filename = gets.chomp
 reader = PipeNumber::Reader.new(filename)
-reader.numbers.each do |num|
-  puts num
-end
+reader.print_all_with_variations
